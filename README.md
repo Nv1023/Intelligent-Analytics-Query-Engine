@@ -137,7 +137,3 @@ This currently passes successfully.
 - Improve multi-table joins and nested business logic
 - Add deployment support for Streamlit or FastAPI
 - Support CSV export of results
-
-## Submission note
-
-This project is designed to be easy to package into a ZIP for evaluation and includes both CLI and browser-based ways to run the system.
