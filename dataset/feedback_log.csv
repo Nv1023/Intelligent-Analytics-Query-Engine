@@ -1,0 +1,4 @@
+query,feedback_score,notes
+"What is the total revenue by region?",0.9,"Exact region aggregation matches expected behavior."
+"Which product category contributes the most revenue?",0.85,"Category-level ranking accepted."
+"Compare APAC revenue against target for February.",0.92,"Target comparison logic validated."

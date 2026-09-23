@@ -1,0 +1,31 @@
+{
+  "sales_data.csv": {
+    "description": "Sales transactions used for revenue, profit, and regional analysis.",
+    "columns": {
+      "order_id": "Unique order identifier.",
+      "order_date": "Date of the transaction in ISO format.",
+      "region": "Sales region (APAC, EMEA, NA).",
+      "country": "Country name.",
+      "city": "City name.",
+      "customer_id": "Customer identifier.",
+      "customer_segment": "Customer segment such as Consumer, Corporate, Home Office.",
+      "product_category": "High-level product type.",
+      "product_subcategory": "More granular product grouping.",
+      "product_name": "Product name.",
+      "quantity": "Number of units sold.",
+      "unit_price": "Selling price per unit.",
+      "discount": "Discount rate as a decimal between 0 and 1.",
+      "shipping_cost": "Shipping charges per order.",
+      "profit": "Net profit associated with the order.",
+      "revenue": "Derived as quantity * unit_price * (1 - discount)."
+    }
+  },
+  "targets.csv": {
+    "description": "Monthly target revenue by region.",
+    "columns": {
+      "region": "Sales region.",
+      "month": "Month in YYYY-MM format.",
+      "target_revenue": "Monthly target revenue in the same currency as actual revenue."
+    }
+  }
+}

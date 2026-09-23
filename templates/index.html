@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intelligent Analytics Query Chatbot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Intelligent Analytics Query Engine</h1>
+      <p>Ask a sales question and get SQL, results, and an explanation.</p>
+    </header>
+
+    <section class="panel">
+      <label for="question">Ask about revenue, targets, categories, or profit</label>
+      <textarea id="question" rows="4" placeholder="Example: Which product category contributes the most revenue?"></textarea>
+      <div class="actions">
+        <button id="submitBtn">Generate answer</button>
+        <button id="sampleBtn" class="secondary">Try example</button>
+      </div>
+    </section>
+
+    <section class="results panel">
+      <h2>Generated SQL</h2>
+      <pre id="sqlOutput">No query yet.</pre>
+
+      <h2>Result</h2>
+      <pre id="resultOutput">{}</pre>
+
+      <h2>Confidence</h2>
+      <div id="confidenceOutput">0.0</div>
+
+      <h2>Explanation</h2>
+      <p id="explanationOutput">The system will explain how the query was mapped to analytics logic.</p>
+    </section>
+  </div>
+
+  <script>
+    const questionField = document.getElementById('question');
+    const sqlOutput = document.getElementById('sqlOutput');
+    const resultOutput = document.getElementById('resultOutput');
+    const confidenceOutput = document.getElementById('confidenceOutput');
+    const explanationOutput = document.getElementById('explanationOutput');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const submitBtn = document.getElementById('submitBtn');
+
+    const sampleQuestion = 'What is the total revenue by region?';
+
+    sampleBtn.addEventListener('click', () => {
+      questionField.value = sampleQuestion;
+      fetchAnswer(sampleQuestion);
+    });
+
+    submitBtn.addEventListener('click', () => {
+      const value = questionField.value.trim();
+      if (!value) {
+        alert('Please enter a question.');
+        return;
+      }
+      fetchAnswer(value);
+    });
+
+    async function fetchAnswer(question) {
+      sqlOutput.textContent = 'Generating SQL...';
+      resultOutput.textContent = '{}';
+      confidenceOutput.textContent = '...';
+      explanationOutput.textContent = 'Working on it...';
+
+      const response = await fetch('/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question })
+      });
+
+      const data = await response.json();
+      sqlOutput.textContent = data.generated_sql || 'No SQL returned.';
+      resultOutput.textContent = JSON.stringify(data.result || {}, null, 2);
+      confidenceOutput.textContent = String(data.confidence_score ?? 0.0);
+      explanationOutput.textContent = data.explanation || 'No explanation available.';
+    }
+  </script>
+</body>
+</html>
